@@ -15,11 +15,11 @@ interface SetupViewProps {
 function SetupView({ sessions, setSessions, now }: SetupViewProps) {
   const [workTime, setWorkTime] = useLocalState<number>(
     LocalStorageConsts.WORK_TIME,
-    60
+    25
   );
   const [breakTime, setBreakTime] = useLocalState<number>(
     LocalStorageConsts.BREAK_TIME,
-    15
+    5
   );
 
   const startWorking = () => {
