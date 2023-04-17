@@ -22,7 +22,9 @@ const Countdown: React.FC<CountdownProps> = ({ now, sessions }) => {
   const countdown = useMemo(() => {
     const targetTime = dayjs.unix(countdownTime);
     const remainingTime = dayjs.duration(targetTime.diff(now));
-    const minutes = remainingTime.minutes().toString().padStart(2, "0");
+    const minutes = (remainingTime.hours() * 60 + remainingTime.minutes())
+      .toString()
+      .padStart(2, "0");
     const seconds = remainingTime.seconds().toString().padStart(2, "0");
     return [minutes, seconds];
   }, [workEndTime, now]);

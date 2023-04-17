@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import { Session } from "../App";
 import Countdown from "./Countdown";
 import clsx from "clsx";
 import { IoClose } from "react-icons/io5";
+import chime from "../assets/chime.mp3";
 
 interface WorkViewProps {
   sessions: Session[];
@@ -12,6 +13,7 @@ interface WorkViewProps {
 }
 
 function WorkView({ sessions, setSessions, now }: WorkViewProps) {
+  const audio = new Audio(chime);
   const isWork =
     sessions.length > 0
       ? now.unix() <= sessions[0].start + sessions[0].work
@@ -29,6 +31,15 @@ function WorkView({ sessions, setSessions, now }: WorkViewProps) {
       setSessions([alteredSession, ...sessions.slice(1)]);
     }
   };
+
+  const isWorkRef = useRef<boolean>();
+
+  useEffect(() => {
+    if (!isWork && !!isWorkRef.current) {
+      audio.play();
+    }
+    isWorkRef.current = isWork;
+  }, [isWork]);
 
   return (
     <div className="flex justify-center py-8">
