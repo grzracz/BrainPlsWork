@@ -49,13 +49,14 @@ const SessionList: React.FC<SessionListProps> = ({
   }, [trueSessions, isWorking, now]);
 
   const renderTime = (seconds: number, size: number, className: string) => {
+    const fullBarSize = 25 * 60;
     let tempSeconds = seconds;
     const widths = [];
-    while (tempSeconds > 3600) {
+    while (tempSeconds > fullBarSize) {
       widths.push(100);
-      tempSeconds -= 3600;
+      tempSeconds -= fullBarSize;
     }
-    widths.push(Math.floor((100 * tempSeconds) / 3600));
+    widths.push(Math.floor((100 * tempSeconds) / fullBarSize));
     return (
       <div className="flex space-x-2 items-center">
         {widths.map((w, i) => (
@@ -85,9 +86,9 @@ const SessionList: React.FC<SessionListProps> = ({
       {sessionData.map((day, i) => (
         <li
           key={day.timestamp}
-          className="flex flex-col sm:flex-row items-center space-y-4 sm:space-x-4"
+          className="flex flex-col md:flex-row items-center bg-black bg-opacity-5 dark:bg-white dark:bg-opacity-5 p-2 rounded-lg space-y-4 sm:space-x-4"
         >
-          <div className="w-36">
+          <div className="w-64">
             <span
               className="opacity-80 font-bold text-sm rounded-lg bg-gray-200 dark:bg-gray-800 p-2 sm:p-4 min-w-max"
               title={dayjs.unix(day.timestamp).format("dddd, DD MMMM")}
@@ -99,7 +100,7 @@ const SessionList: React.FC<SessionListProps> = ({
                 : dayjs.unix(day.timestamp + 24 * 3600).fromNow()}
             </span>
           </div>
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-end w-full">
+          <div className="flex flex-col sm:flex-row sm:justify-between space-y-4 sm:space-y-0 sm:space-x-8 items-start sm:items-end md:w-full">
             <div>
               {renderTime(
                 day.workSeconds,
