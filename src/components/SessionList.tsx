@@ -88,7 +88,7 @@ const SessionList: React.FC<SessionListProps> = ({
           key={day.timestamp}
           className="flex flex-col md:flex-row items-center bg-black bg-opacity-5 dark:bg-white dark:bg-opacity-5 p-2 rounded-lg space-y-4 sm:space-x-4"
         >
-          <div className="w-64">
+          <div className="w-64 flex flex-col justify-center items-center space-y-1">
             <span
               className="opacity-80 font-bold text-sm rounded-lg bg-gray-200 dark:bg-gray-800 p-2 sm:p-4 min-w-max"
               title={dayjs.unix(day.timestamp).format("dddd, DD MMMM")}
@@ -99,8 +99,11 @@ const SessionList: React.FC<SessionListProps> = ({
                 ? "Yesterday"
                 : dayjs.unix(day.timestamp + 24 * 3600).fromNow()}
             </span>
+            <span className="text-xs opacity-50">
+              {day.sessions} session{day.sessions > 1 ? "s" : ""}
+            </span>
           </div>
-          <div className="flex flex-col sm:flex-row sm:justify-between space-y-4 sm:space-y-0 sm:space-x-8 items-start sm:items-end md:w-full">
+          <div className="flex flex-col sm:flex-row sm:justify-between space-y-4 sm:space-y-0 sm:space-x-8 items-start sm:items-end md:w-full md:pr-2">
             <div>
               {renderTime(
                 day.workSeconds,
